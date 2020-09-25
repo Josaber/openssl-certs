@@ -1,0 +1,15 @@
+#!/bin/bash -e
+
+cd $(dirname $0)/..
+source ./auto/config
+
+cp certs/www.bqliu.com.crt www/www.bqliu.com.crt
+cp certs/www.bqliu.com.key www/www.bqliu.com.key
+docker build -t $WEB_IMAGE_NAME ./www
+docker run \
+  --rm \
+  -p 10000:80 \
+  -p 443:443 \
+  -it \
+  --name www-bqliu-com \
+  $WEB_IMAGE_NAME

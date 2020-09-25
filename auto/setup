@@ -1,0 +1,8 @@
+#!/bin/bash -e
+
+CA_DIR=certs-and-keys/ca
+cd $(dirname $0)/..
+rm -rf ${CA_DIR}/../*
+mkdir -pv ${CA_DIR} && chmod 700 ${CA_DIR}
+mkdir -pv ${CA_DIR}/certs
+touch ${CA_DIR}/index

@@ -1,0 +1,6 @@
+certs-and-keys/*
+certs/*
+!certs/*setup-certs
+www/*.crt
+www/*.key
+.DS_Store

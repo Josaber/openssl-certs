@@ -1,0 +1,17 @@
+#!/bin/bash -e
+cd $(dirname $0)
+
+# Generaete CA key
+openssl genrsa -out root-ca.key 2048
+# Self-sign
+openssl req -x509 -sha256 -nodes -days 3650 -newkey rsa:2048 -keyout root-ca.key -out root-ca.crt -subj "/C=CN/ST=Shaanxi/L=Xi'an/O=ThoughtWorks, Inc./OU=AU/CN=ca.bqliu.com"
+# Convert key and cert to pem
+openssl rsa -in root-ca.key -text > root-ca.key.pem
+openssl x509 -inform PEM -in root-ca.crt > root-ca.crt.pem
+
+# Generate a private key
+openssl genrsa -out www.bqliu.com.key 2048
+# Generate a Certificate Signing Request
+openssl req -new -sha256 -key www.bqliu.com.key -subj "/C=CN/ST=Shaanxi/L=Xi'an/O=ThoughtWorks, Inc./CN=www.bqliu.com" -out www.bqliu.com.csr
+# Generate a certificate based on CSR
+openssl x509 -req -days 365 -sha256 -in www.bqliu.com.csr -CA root-ca.crt.pem -CAcreateserial -CAkey root-ca.key.pem -out www.bqliu.com.crt

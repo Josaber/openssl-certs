@@ -1,0 +1,10 @@
+#!/bin/bash -e
+
+# 3. Sign Certificates
+openssl genrsa -out www.bqliu.com.key 2048
+openssl req -new -sha256 -key www.bqliu.com.key -subj "/C=CN/ST=Shaanxi/L=Xi'an/O=ThoughtWorks, Inc./CN=www.bqliu.com" -out www.bqliu.com.csr
+openssl ca -create_serial -extensions v3_ca_has_san -md sha1 -days 365 -out www.bqliu.com.crt -infiles www.bqliu.com.csr
+openssl req -in www.bqliu.com.csr -noout -text > cert-info
+
+# References:
+# L5: https://github.com/openssl/openssl/blob/1aec7716c1c5fccf605a46252a46ea468e684454/crypto/objects/objects.txt#L716

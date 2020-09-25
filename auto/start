@@ -1,0 +1,15 @@
+#!/bin/bash -e
+
+cd $(dirname $0)/..
+source ./auto/config
+
+docker build -t $IMAGE_NAME .
+docker run \
+  -v $(pwd)/certs-and-keys:/openssl \
+  -v $(pwd)/auto/setup-ca:/app/setup-ca \
+  -v $(pwd)/auto/setup-ca:/app/sign-cert \
+  --rm \
+  -it \
+  --name certificate-authority \
+  $IMAGE_NAME \
+  bash

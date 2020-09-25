@@ -1,0 +1,6 @@
+version: '3'
+services:
+  certificate-authority:
+    build: .
+    volumes:
+      - ./certs-and-keys:/openssl
