@@ -192,7 +192,7 @@ localityName            = Locality Name (eg, city)
 localityName_default    = Xi'an
 
 0.organizationName      = Organization Name (eg, company)
-0.organizationName_default = ThoughtWorks
+0.organizationName_default = BQLIU
 
 1.organizationName      = Second Organization Name (eg, company)
 1.organizationName_default = AU
@@ -206,7 +206,7 @@ commonName_default      = bqliu
 
 emailAddress            = Email Address
 emailAddress_max        = 64
-emailAddress_default    = bqliu@thoughtworks.com
+emailAddress_default    = 1174980997@qq.com
 
 # SET-ex3               = SET extension number 3
 

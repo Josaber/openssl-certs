@@ -1,5 +1,5 @@
 FROM centos:7
-LABEL Author bqliu<bqliu@thoughtworks.com>
+LABEL Author=bqliu<1174980997@qq.com>
 
 # RUN yum install openssl -y
 # OpenSSL 1.0.2k-fips  26 Jan 2017

@@ -4,7 +4,7 @@ CA_DIR=ca
 
 # 1. Generate RSA Keypair for CA & Cert Request
 # openssl genrsa -out ${CA_DIR}/root-ca.key 4096
-openssl req -new -nodes -newkey rsa:4096 -keyout ${CA_DIR}/root-ca.key -out ${CA_DIR}/root-ca.csr -subj "/C=CN/ST=Shaanxi/L=Xi'an/O=ThoughtWorks, Inc./OU=AU/CN=ca.bqliu.com"
+openssl req -new -nodes -newkey rsa:4096 -keyout ${CA_DIR}/root-ca.key -out ${CA_DIR}/root-ca.csr -subj "/C=CN/ST=Shaanxi/L=Xi'an/O=BQLIU, Inc./OU=AU/CN=ca.bqliu.com"
 
 # 2. Sign Self
 openssl ca -create_serial -md sha1 -out ${CA_DIR}/root-ca.crt -days 3650 -keyfile ${CA_DIR}/root-ca.key -selfsign -extensions v3_ca_has_san -infiles ${CA_DIR}/root-ca.csr

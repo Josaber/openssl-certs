@@ -1,6 +1,7 @@
 certs-and-keys/*
 certs/*
 !certs/*setup-certs
+!certs/create-chain
 www/*.crt
 www/*.key
 .DS_Store

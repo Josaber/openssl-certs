@@ -1,0 +1,48 @@
+#!/bin/bash -e
+
+# Script to create certificate chain file for www.bqliu.com
+# The chain file contains the server certificate followed by the CA certificate
+
+cd $(dirname $0)
+
+SERVER_CERT="www.bqliu.com.crt"
+CA_CERT="root-ca.crt"
+CHAIN_FILE="www.bqliu.com-chain.crt"
+
+# Check if server certificate exists
+if [ ! -f "$SERVER_CERT" ]; then
+    echo "Error: $SERVER_CERT not found!"
+    echo "Please run setup-certs or simple-setup-certs first."
+    exit 1
+fi
+
+# Check if CA certificate exists
+if [ ! -f "$CA_CERT" ]; then
+    echo "Error: $CA_CERT not found!"
+    echo "Please run setup-certs or simple-setup-certs first."
+    exit 1
+fi
+
+# Create certificate chain: server cert first, then CA cert
+echo "Creating certificate chain file: $CHAIN_FILE"
+cat "$SERVER_CERT" "$CA_CERT" > "$CHAIN_FILE"
+
+# Verify the chain file
+if [ -f "$CHAIN_FILE" ]; then
+    echo "✓ Certificate chain file created successfully: $CHAIN_FILE"
+    echo ""
+    echo "Certificate chain contents:"
+    echo "  1. Server certificate:"
+    openssl x509 -in "$SERVER_CERT" -noout -subject -issuer 2>/dev/null | sed 's/^/      /'
+    echo "  2. CA certificate:"
+    openssl x509 -in "$CA_CERT" -noout -subject -issuer 2>/dev/null | sed 's/^/      /'
+    echo ""
+    echo "Chain verification:"
+    openssl verify -CAfile "$CA_CERT" "$SERVER_CERT" 2>&1 | sed 's/^/  /' || true
+    echo ""
+    echo "File size: $(ls -lh "$CHAIN_FILE" | awk '{print $5}')"
+else
+    echo "Error: Failed to create $CHAIN_FILE"
+    exit 1
+fi
+
